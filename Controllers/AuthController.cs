@@ -13,7 +13,7 @@ namespace BlazorAuthGoogleProgileClaimsPictureVideo;
 [ApiController]
 public class AuthController : ControllerBase
 {
-  [HttpGet("google-signin")]
+  [HttpGet("google")]
   public async Task<ActionResult> Google()
   {
     var properties = new AuthenticationProperties

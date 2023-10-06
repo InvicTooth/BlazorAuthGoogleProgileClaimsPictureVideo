@@ -2,17 +2,29 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using BlazorAuthGoogleProgileClaimsPictureVideo.Data;
 using BlazorAuthGoogleProgileClaimsPictureVideo;
+using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+//if (!builder.Environment.IsDevelopment())
+{
+  builder.Services.AddHttpsRedirection(options =>
+  {
+    options.RedirectStatusCode = (int)HttpStatusCode.PermanentRedirect;
+    options.HttpsPort = 7240;
+  });
+}
+
+
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddAuthentication("Cookies")
   .AddCookie(opt => {
     opt.Cookie.Name = "TryingoutGoogleOAuth";
-    opt.LoginPath = "/auth/google-signin";
+    opt.LoginPath = "/auth/google";
   })
   .AddGoogle(opt => {
     opt.ClientId = builder.Configuration["Google:Id"];
